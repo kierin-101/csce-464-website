@@ -6,6 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="styles.css">
   <script src="darkMode.js"></script>
+  <script src="comments.js"></script>
   <title>Kierin's Website</title>
 </head>
 
@@ -23,17 +24,37 @@
       <li>
         <a href="#ta_experience">TA Experience</a>
       </li>
+      <li>
+        <a href="#comments">Submit a Comment</a>
+      </li>
+      <li>
+        <a href="#comments_list">View Comments</a>
+      </li>
     </ul>
-    <button id="theme_button" onclick="switchTheme()">
-      Switch to Dark Mode
-    </button>
   </header>
+  <button id="theme_button" onclick="switchTheme()">
+    Switch to Dark Mode
+  </button>
   <span id="welcome">
     <h1>Welcome!</h1>
   </span>
   <div class="intro">
     <p>
-      Hi, I'm Kierin. I'm a student at the University of Nebraska-Lincoln, and I'm an SE major.
+      Hi, I'm Kierin. I'm a student at the University of Nebraska-Lincoln, and I'm an SE major. In my free time, I enjoy
+      writing, playing video games, and watching anime/cartoons. My favorite video game is probably <i>Baldur's Gate
+        III</i>.
+    </p>
+    <p>
+      When I'm not doing any of those things, I'm probably working on a project or doing homework. I'm also a TA for
+      CSCE 231, so that also takes up a lot of my time. (You can read more about that in the "Teaching Assistant
+      Experience" section.)
+    </p>
+    <p>
+      In terms of Senior Design, I'm working with Henderson State Bank to create a web application that allows users to
+      view and edit loans. (You can read more about that in the "Projects I've Worked On" section.)
+    </p>
+    <p>
+      Here's a whimsical unicorn to brighten your day. I hope you enjoy your stay on my website!
     </p>
     <img id="whimsy" height="400px" widht="400px" src="whimsy.png" alt="A whimsical unicorn">
   </div>
@@ -64,27 +85,67 @@
       </span>
       <img id="hsb_logo" height="200px" width="200px" src="ag_input.jpg" alt="Henderson State Bank logo">
       <p id="apology" hidden>
-        Sorry for the ugly white background on the logo. I couldn't find a good image of the logo with a transparent
-        background.
+        (Sorry for the ugly white background on the logo. I couldn't find a good image of the logo with a transparent
+        background.)
       </p>
       <p>
         The Agricultural Input Origination Software (long name, blame the client)
         is a web application that allows users from Henderson State Bank and their customers to edit,
-        view, and create loans. I worked on the front-end of the application, using ReactJS
+        view, and create loans. I mainly work on the front-end of the application, using ReactJS
         and TypeScript to create a User Interface for the application.
       </p>
-    </div>
-    <div class="ta_content">
-      <span id="ta_experience">
-        <h1>Teaching Assistant Experience</h1>
-      </span>
       <p>
-        I have been a TA for CSCE 231 for the past two semesters. As I'm not a GTA yet, I didn't have to deal with
-        grading or holding recitation, but I do hold office hours in the dungeon that is Avery 12 and lead 2 lab
-        sections a week. I also unofficially help students over Discord via the 231 server.
+        (The reason I work on the front-end is because I'm scared of the back-end. I don't like working with databases.)
       </p>
     </div>
   </div>
+  <div class="ta_content">
+    <span id="ta_experience">
+      <h1>Teaching Assistant Experience</h1>
+    </span>
+    <p>
+      I have been a TA for CSCE 231 for the past two semesters. I hold office hours in the dungeon that is Avery 12 and
+      lead 2 lab
+      sections a week, helping students with lab, introducing them to new concepts, things like that. I also
+      help students off the clock over Discord via the 231 server.
+    </p>
+  </div>
+  <div class="comments">
+    <span>
+      <h1>Comment Box</h1>
+    </span>
+    <form id="comment_form">
+      <label for="name">Name:</label>
+      <input type="text" id="name" name="name" required>
+      <br>
+      <label for="comment">Comment:</label>
+      <input type="text" id="comment" name="comment" required></textarea>
+      <br>
+      <input type="submit" value="Submit Comment" onclick="submitComment(event)">
+    </form>
+  </div>
+  <div id="comments_section">
+    <h2>Comments</h2>
+    <ul id="comments_list">
+      <li>
+        <p>
+          <b>I_LIKE_TRAINS</b>: I LIKE TRAINS *train noises* <i>(2023-04-20 4:20:00)</i>
+        </p>
+      </li>
+    </ul>
+  </div>
+  <footer>
+    <p>
+      &copy; 2024 Kierin Andrews <br><br>
+      <a href="">
+        LinkedIn
+      </a>
+      |
+      <a href="">
+        Github
+      </a>
+      <br>
+    </p>
 </body>
 
 </html>

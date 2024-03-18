@@ -5,9 +5,11 @@ header {
   color: white;
   text-align: center;
   padding: 5px;
+  display: flex;
 }
 
 header ul {
+  display: flex;
   position: static;
   list-style-type: none;
   margin: 0;
@@ -93,6 +95,15 @@ table > tr > th {
   font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
 }
 
+.intro {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 10px;
+  padding: 10px;
+  border: 1px solid black;
+}
+
 @media screen and (max-width: 600px){
   body::after {
     content: "This screen is <= 600px wide";
@@ -117,13 +128,11 @@ body::after {
   font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
 }
 
-.intro {
-  display: flex;
-}
-
-@media screen  and (max-width: 500px){
-  .flex_container {
+@media screen  and (max-width: 700px){
+  header ul {
+    flex: 1;
     flex-direction: column;
+    text-align: center;
   }
 }
 
@@ -132,4 +141,48 @@ body::after {
     height: 200px;
     width: 200px;
   }
+}
+
+#comment_form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+#comment_form > label {
+  margin: 5px;
+  color: blue;
+  font-size: 20px;
+  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}
+
+#comment_form > input {
+  margin: 5px;
+  padding: 5px;
+  font-size: 20px;
+  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}
+
+.project {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 10px;
+  padding: 10px;
+  border: 1px solid black;
+}
+
+footer {
+  width: 100%;
+  background-color: #333;
+  color: white;
+  text-align: center;
+  padding: 5px;
+}
+
+#theme_button {
+  margin: 5px;
+  padding: 5px;
+  font-size: 20px;
+  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
 }
