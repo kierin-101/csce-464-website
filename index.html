@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="styles.css">
+  <script src="darkMode.js"></script>
+  <title>Kierin's Website</title>
+</head>
+
+<body>
+  <header>
+    <ul>
+      <li><a href="#welcome">Home</a></li>
+      <li class="dropdown">
+        <a href="#projects" class="dropbtn">Projects</a>
+        <div class="dropdown-content">
+          <a href="#pitivi">Pitivi</a>
+          <a href="#ag_input">Ag Input Origination Software</a>
+        </div>
+      </li>
+      <li>
+        <a href="#ta_experience">TA Experience</a>
+      </li>
+    </ul>
+    <button id="theme_button" onclick="switchTheme()">
+      Switch to Dark Mode
+    </button>
+  </header>
+  <span id="welcome">
+    <h1>Welcome!</h1>
+  </span>
+  <div class="intro">
+    <p>
+      Hi, I'm Kierin. I'm a student at the University of Nebraska-Lincoln, and I'm an SE major.
+    </p>
+    <img id="whimsy" height="400px" widht="400px" src="whimsy.png" alt="A whimsical unicorn">
+  </div>
+  <div class="projects">
+    <span id="projects">
+      <h1>Projects I've Worked On</h1>
+    </span>
+    <div class="project">
+      <span id="pitivi">
+        <h2>Pitivi</h2>
+      </span>
+      <img id="pitivi_logo" height="200px" width="200px" src="pitivi.svg" alt="Pitivi logo">
+      <p>
+        Pitivi is a free and open-source video editor for Linux. It is written in Python and uses the GStreamer
+        multimedia framework. My team "contributed" (the changes were never submitted in a merge request) a new feautre
+        that allowed the user to essentially bookmark points in their video timeline, give the bookmakrs names, do
+        things like that.
+      </p>
+      <p>
+        (It was kinda boring, but it was a good learning experience. I learned a lot about the Git workflow and how to
+        work with a team of developers. I learned a lot about the GStreamer framework and how to work with it. I also
+        <i>also</i> learned that I don't like working with GStreamer.)
+      </p>
+    </div>
+    <div class="project">
+      <span id="ag_input">
+        <h2>Agricultural Input Origination Software</h2>
+      </span>
+      <img id="hsb_logo" height="200px" width="200px" src="ag_input.jpg" alt="Henderson State Bank logo">
+      <p id="apology" hidden>
+        Sorry for the ugly white background on the logo. I couldn't find a good image of the logo with a transparent
+        background.
+      </p>
+      <p>
+        The Agricultural Input Origination Software (long name, blame the client)
+        is a web application that allows users from Henderson State Bank and their customers to edit,
+        view, and create loans. I worked on the front-end of the application, using ReactJS
+        and TypeScript to create a User Interface for the application.
+      </p>
+    </div>
+    <div class="ta_content">
+      <span id="ta_experience">
+        <h1>Teaching Assistant Experience</h1>
+      </span>
+      <p>
+        I have been a TA for CSCE 231 for the past two semesters. As I'm not a GTA yet, I didn't have to deal with
+        grading or holding recitation, but I do hold office hours in the dungeon that is Avery 12 and lead 2 lab
+        sections a week. I also unofficially help students over Discord via the 231 server.
+      </p>
+    </div>
+  </div>
+</body>
+
+</html>
