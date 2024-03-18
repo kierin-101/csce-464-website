@@ -195,6 +195,11 @@ footer {
   border: 1px solid black;
 }
 
+.coursework > ul {
+  list-style-type: square;
+  padding: 0;
+}
+
 .ta_content {
   display: flex;
   flex-direction: column;
