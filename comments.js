@@ -34,5 +34,5 @@ submitComment = function (event) {
   const timeString = currentTime.toISOString().slice(0, 19).replace('T', ' ');
   newComment.innerHTML = '<p><b>' + comment.name + '</b>: ' + comment.text + ' <i>(' + timeString + ')</i></p>';
   commentList.appendChild(newComment);
-  console.log(comment);
+  console.log("New comment added", comment);
 }
