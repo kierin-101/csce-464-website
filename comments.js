@@ -33,7 +33,6 @@ submitComment = function (event) {
   currentTime.setHours(currentTime.getHours() - (currentTime.getTimezoneOffset() / 60));
   const timeString = currentTime.toISOString().slice(0, 19).replace('T', ' ');
   newComment.innerHTML = '<p><b>' + comment.name + '</b>: ' + comment.text + ' <i>(' + timeString + ')</i></p>';
-  // newComment.innerHTML = '<p><b>' + comment.name + '</b>: ' + comment.text + '</p>';
   commentList.appendChild(newComment);
   console.log(comment);
 }
