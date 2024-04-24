@@ -1,3 +1,10 @@
+<!-- Ideas to implement -->
+<!-- Store comments in a JSON file -->
+<!-- Add a way to delete comments -->
+<!-- Add a way to edit comments -->
+<!-- Add a way to reply to comments -->
+<!-- Add a way to like comments -->
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -50,7 +57,7 @@
       see where my career takes me!
     <p>
       Do you want to see the code for this website? You can find it here -> <a
-        href="https://github.com/kierin-101/csce-451-website">https://github.com/kierin-101/csce-451-website</a>
+        href="https://github.com/kierin-101/csce-464-website">https://github.com/kierin-101/csce-464-website</a>
     </p>
     <p>
       Here's a whimsical unicorn to brighten your day. I hope you enjoy your stay on my website!
@@ -145,14 +152,14 @@
     <h1>Submit a Comment</h1>
   </span>
   <div class="comment_submission_area">
-    <form id="comment_form">
+    <form id="comment_form" action="uploadComment.php" method="post">
       <label for="name">Name:</label>
       <input type="text" id="name" name="name" required>
       <br>
       <label for="comment">Comment:</label>
       <input type="text" id="comment" name="comment" required></textarea>
       <br>
-      <input type="submit" value="Submit" onclick="submitComment(event)">
+      <input type="submit" value="Submit">
     </form>
   </div>
   <h1>View Comments</h1>
@@ -165,6 +172,31 @@
       </li>
     </ul>
   </div>
+  <script>
+    function getComments() {
+      const comments = document.getElementById("comments_list")
+      comments.innerHTML = ""
+      fetch("./comments.json")
+        .then(response => response.json())
+        .then(data => {
+          Object.values(data).forEach(comment => {
+            const li = document.createElement("li")
+            const p = document.createElement("p")
+            const b = document.createElement("b")
+            const i = document.createElement("i")
+            b.innerText = comment.name
+            i.innerText = `(${comment.date})`
+            p.appendChild(b)
+            p.appendChild(document.createTextNode(`: ${comment.comment} `))
+            p.appendChild(i)
+            li.appendChild(p)
+            comments.appendChild(li)
+          })
+        })
+    }
+
+    getComments()
+  </script>
   <footer>
     <p>
       &copy; 2024 Kierin Andrews
