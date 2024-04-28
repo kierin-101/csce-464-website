@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="styles.css">
+  <script src="darkMode.js"></script>
+  <script src="viewCounter.js"></script>
+  <title>Kierin's Wesbite - Resume</title>
+</head>
+
+<body>
+  <header>
+    <nav>
+      <li class="dropdown">
+        <a href="index.html#welcome" class="dropbtn">Home</a>
+        <div class="dropdown-content">
+          <a href="index.html#welcome">Welcome</a>
+          <a href="index.html#courses">Relevant Coursework</a>
+          <a href="index.html#projects">Projects</a>
+          <a href="index.html#pitivi">Pitivi</a>
+          <a href="index.html#ag_input">Ag Input Origination Software</a>
+          <a href="index.html#ta_experience">TA Experience</a>
+          <a href="index.html#comment_submission">Submit a Comment</a>
+          <a href="index.html#comments_list">View Comments</a>
+        </div>
+      </li>
+      <li><a href="resume.html">Resume</a></li>
+      <li><a href="trivia_game.html">Trivia Game</a></li>
+    </nav>
+  </header>
+  <button id="theme_button" onclick="switchTheme()">
+    Switch to Dark Mode
+  </button>
+  <h2>This page has been viewed <span id="view_count">?</span> times.</h2>
+  <script>
+    // page id 2
+    updateViewCount(2);
+  </script>
+  <br>
+  <embed src="resume.pdf" type="application/pdf" width="750" height="980" />
+
+</body>
+
+</html>

@@ -1,38 +1,36 @@
-validateName = function (commentName) {
-  if (commentName.length < 3) {
-    alert('Name must be at least 3 characters');
-    return false;
+function getComments() {
+  const req = new XMLHttpRequest();
+  req.open("GET", "getComments.php", true);
+  req.onreadystatechange = function () {
+    if (req.readyState == 4) {
+      const comments = JSON.parse(req.responseText);
+      console.log(comments);
+      const list = document.getElementById("comments_list");
+      list.innerHTML = "";
+      Object.values(comments).forEach(comment => {
+        const li = document.createElement("li");
+        const commentData = `<b>${comment.user}</b>: ${comment.comment} (<i>${comment.comment_time}</i>)`;
+        const likeButton = `<button onclick="likeComment(${comment.id})">Like</button>`;
+        const likeCount = `Likes: ${comment.likes}`;
+        li.innerHTML = commentData + likeButton + likeCount;
+        list.appendChild(li);
+      });
+    }
   }
-  return true;
+  req.send();
 }
 
-validateComment = function (commentText) {
-  if (commentText.length < 10) {
-    alert('Comment must be at least 10 characters');
-    return false;
-  }
-  return true;
-}
+getComments()
+setInterval(getComments, 5000);
 
-submitComment = function (event) {
-  event.preventDefault(); // stop the form from submitting
-  const commentName = document.getElementById('name').value;
-  const goodCommentName = validateName(commentName);
-  if (!goodCommentName) {
-    return;
+function likeComment(id) {
+  const req = new XMLHttpRequest();
+  req.open("POST", "likeComment.php", true);
+  req.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+  req.onreadystatechange = function () {
+    if (req.readyState == 4) {
+      getComments(); // Refresh comments
+    }
   }
-  const commentText = document.getElementById('comment').value;
-  const goodCommentText = validateComment(commentText);
-  if (!goodCommentText) {
-    return;
-  }
-  const comment = { name: commentName, text: commentText };
-  const commentList = document.getElementById('comments_list');
-  const newComment = document.createElement('li');
-  const currentTime = new Date();
-  currentTime.setHours(currentTime.getHours() - (currentTime.getTimezoneOffset() / 60));
-  const timeString = currentTime.toISOString().slice(0, 19).replace('T', ' ');
-  newComment.innerHTML = '<p><b>' + comment.name + '</b>: ' + comment.text + ' <i>(' + timeString + ')</i></p>';
-  commentList.appendChild(newComment);
-  console.log("New comment added", comment);
+  req.send(`id=${id}`);
 }

@@ -1,22 +1,29 @@
 <?php
+// validate user input
+$user = $_POST['name'];
+$comment = $_POST['comment'];
 
-// write to comments.json
-$file = file('./comments.json', FILE_IGNORE_NEW_LINES);
-$lineCount = count($file);
-$commentNumber = $lineCount - 2;
-
-$jsonFormat = '  "%s": {"name": "%s", "comment": "%s", "date": "%s"}'; // json format for comments
-$comment = sprintf($jsonFormat, $commentNumber, $_POST['name'], $_POST['comment'], date('Y-m-d H:i:s'));
-
-$file[$lineCount - 2] .= ','; // add comma to last comment
-$file[$lineCount - 1] = $comment; // add new comment
-array_push($file, "}"); // close json
-
-file_put_contents("./comments.json", ''); // clear file
-for ($i = 0; $i < count($file); $i++) {
-  echo $file[$i];
-  echo '<br>';
-  file_put_contents('./comments.json', $file[$i] . PHP_EOL, FILE_APPEND);
+if (strlen($user) <= 3) {
+  return 'Name must be longer than 3 characters';
 }
 
-header('Location: ./index.html', true);
+if (strlen($comment) <= 5) {
+  return 'Comment must be longer than 5 characters';
+}
+
+// connect to mysql
+$conn = mysqli_connect("localhost", "root");
+if (mysqli_connect_errno()) {
+  return "MySQL Error: " . mysqli_connect_error();
+}
+
+// parse post data and insert into comments table
+$time = date('Y-m-d H:i:s');
+
+$query = "INSERT INTO website_db.comments (user, comment, comment_time, likes) VALUES ('$user', '$comment', '$time', 0)";
+
+if (!mysqli_query($conn, $query)) {
+  return "MySQL Error: " . mysqli_error($conn);
+}
+
+header("Location: ./index.html#comments_list"); // redirect to comments section instead of showing a blank page
