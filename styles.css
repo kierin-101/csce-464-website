@@ -8,6 +8,13 @@ header {
   display: flex;
 }
 
+#view_count_tab {
+  /*vertically align in menu bar*/
+  display: inline-block;
+  vertical-align: middle;
+  padding: 5px;
+}
+
 embed {
   margin: 10px;
 }
@@ -187,7 +194,13 @@ footer {
   margin: 5px;
   padding: 5px;
   font-size: 20px;
+  background-color: gray;
   font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}
+
+#theme_button:hover {
+  background-color: gray;
+  cursor:default;
 }
 
 .coursework {

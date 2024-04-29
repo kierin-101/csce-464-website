@@ -20,8 +20,21 @@ function getComments() {
   req.send();
 }
 
-getComments()
-setInterval(getComments, 5000);
+function submitComment(event) {
+  event.preventDefault();
+  const name = document.getElementById("name").value;
+  const comment = document.getElementById("comment").value;
+  const req = new XMLHttpRequest();
+  req.open("POST", "uploadComment.php", true);
+  req.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+  req.onreadystatechange = function () {
+    if (req.readyState == 4) {
+      getComments(); // Refresh comments immediately
+    }
+  }
+  req.send(`name=${name}&comment=${comment}`);
+}
+
 
 function likeComment(id) {
   const req = new XMLHttpRequest();
@@ -29,8 +42,11 @@ function likeComment(id) {
   req.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
   req.onreadystatechange = function () {
     if (req.readyState == 4) {
-      getComments(); // Refresh comments
+      getComments(); // Refresh comments immediately
     }
   }
   req.send(`id=${id}`);
 }
+
+getComments() // get comments on page load
+setInterval(getComments, 5000); // refresh comments every 5 seconds

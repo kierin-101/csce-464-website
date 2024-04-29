@@ -36,7 +36,6 @@
   </button>
   <h2>This page has been viewed <span id="view_count">?</span> times.</h2>
   <script>
-    // page id 3
     updateViewCount(3);
   </script>
   <h1>Trivia Game</h1>
@@ -52,7 +51,7 @@
   </div>
   <div id="endScreen" style="display: none;">
     <p>Game Over!</p>
-    <p>Your final score is <span id="finalScore">0</span> out of 10.</p>
+    <p id="finalScoreMessage"></p>
     <button onclick="startGame()">Play Again</button>
 </body>
 

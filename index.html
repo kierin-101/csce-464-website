@@ -8,6 +8,7 @@
   <script src="darkMode.js"></script>
   <script src="comments.js"></script>
   <script src="viewCounter.js"></script>
+  <script src="fontSize.js"></script>
   <title>Kierin's Website</title>
 </head>
 
@@ -29,14 +30,21 @@
       </li>
       <li><a href="resume.html">Resume</a></li>
       <li><a href="trivia_game.html">Trivia Game</a></li>
+      <li>
+        <button id="theme_button" onclick="switchTheme()">Switch to Dark Mode</button>
+      </li>
+      <li>
+        <button id="theme_button" onclick="changeFontSize(2)">Increase Font Size</button>
+      </li>
+      <li>
+        <button id="theme_button" onclick="changeFontSize(-2)">Decrease Font Size</button>
+      </li>
+      <li>
+        <button id="theme_button">This page has been viewed <span id="view_count">?</span> times.</button>
+      </li>
     </nav>
   </header>
-  <button id="theme_button" onclick="switchTheme()">
-    Switch to Dark Mode
-  </button>
-  <h2>This page has been viewed <span id="view_count">?</span> times.</h2>
   <script>
-    // page id 1
     updateViewCount(1);
   </script>
   <span id="welcome">
@@ -47,7 +55,7 @@
       Hi, I'm Kierin. I'm in my junior year at the University of Nebraska-Lincoln, and I'm an SE major. For Senior
       Design, I work with Henderson State Bank to create a web application that allows users to edit, view, and create
       loans. I'm also a TA for CSCE 231, and I previously worked on the FOSS app Pitivi last year for SOFT 261. This
-      summer, I'm going to be interning for a local company, though I'm not sure what I'll be doing yet. I'm excited to
+      summer, I'm going to be interning for Mutual of Omaha, though I'm not sure what I'll be doing yet. I'm excited to
       see where my career takes me!
     <p>
       Do you want to see the code for this website? You can find it here -> <a
@@ -134,8 +142,7 @@
   <div class="ta_content">
     <p>
       I have been a TA for CSCE 231 for the past two semesters. I hold office hours in the dungeon that is Avery 12 and
-      lead 2 lab
-      sections a week, helping students with lab, introducing them to new concepts, things like that. I also
+      lead 2 lab sections a week, helping students with lab, introducing them to new concepts, things like that. I also
       help students off the clock over Discord via the 231 server.
     </p>
     <p>
@@ -146,7 +153,7 @@
     <h1>Submit a Comment</h1>
   </span>
   <div class="comment_submission_area">
-    <form id="comment_form" action="uploadComment.php" method="post">
+    <form id="comment_form" onsubmit="submitComment(event)">
       <label for="name">Name:</label>
       <input type="text" id="name" name="name" required>
       <br>
@@ -165,6 +172,10 @@
     <p>
       &copy; 2024 Kierin Andrews
     </p>
+  </footer>
+  <script>
+    updateFontSize();
+  </script>
 </body>
 
 </html>

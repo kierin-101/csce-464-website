@@ -87,8 +87,18 @@ function displayQuestion(index) {
 
 function endGame() {
   // update final score
-  const finalScoreElement = document.getElementById("finalScore");
-  finalScoreElement.textContent = document.getElementById("score").textContent;
+  const finalScoreElement = document.getElementById("finalScoreMessage");
+  const score = parseInt(document.getElementById("score").textContent);
+  // calculate game over message
+  if (score >= 8) {
+    finalScoreElement.textContent = "Great job! You got " + score + " out of 10 correct!";
+  }
+  else if (score >= 5) {
+    finalScoreElement.textContent = "Not bad! You got " + score + " out of 10 correct!";
+  }
+  else {
+    finalScoreElement.textContent = "Better luck next time! You got " + score + " out of 10 correct!";
+  }
   // hide the question screen
   document.getElementById("gameScreen").style.display = "none";
   // display the end screen

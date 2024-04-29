@@ -7,8 +7,8 @@ Checkmark for copy pasting - ✓
 3.  Ability to reply to comments
 4.  Way to edit comments you posted
 5.  Ability to "like" comments  ✓
-6.  Allow user to make text on the site bigger/smaller
+6.  Allow user to make text on the site bigger/smaller ✓
 7.  Add my resume w/ ability to download ✓
 8.  Add page view counter ✓
-9.  Add "About me" trivia game
+9.  Add "About me" trivia game ✓
 10. Store trivia game scores in database and display top 10 scores
