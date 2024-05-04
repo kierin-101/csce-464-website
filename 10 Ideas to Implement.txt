@@ -1,4 +1,4 @@
-Checkmark for copy pasting - ✓
+Check mark for copy pasting - ✓
 
 10 Ideas to Implement
 ---------------------

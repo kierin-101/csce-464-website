@@ -1,13 +1,15 @@
 function changeFontSize(delta) {
   var size = sessionStorage.getItem('fontSize');
-  var parsedSize = parseInt(size);
-  if (parsedSize == NaN) {
+  if (isNaN(parseInt(size))) {
     size = 16;
   }
+  console.log(size);
+  const parsedSize = parseInt(size);
   const newSize = parsedSize + delta;
   if (newSize < 8 || newSize > 24) {
     return;
   }
+  console.log(delta, newSize);
   sessionStorage.setItem('fontSize', newSize);
   console.log(sessionStorage);
   // go through paragraphs and change font size
@@ -24,9 +26,9 @@ function changeFontSize(delta) {
 
 function updateFontSize() {
   var size = sessionStorage.getItem('fontSize');
-  console.log(size);
+  // console.log(size);
   var parsedSize = parseInt(size);
-  console.log(parsedSize);
+  // console.log(parsedSize);
   if (parsedSize == NaN) {
     size = 16;
   }

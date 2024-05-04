@@ -234,15 +234,25 @@ footer {
   border: 1px solid black;
 }
 
-#comments_section > ul {
-  list-style-type: none;
-  padding: 0;
+.comment {
+  display: flex;
+  flex-direction: column;
+  margin: 10px;
+  padding: 10px;
+  border: 1px solid black;
 }
 
-#comments_section > ul > li {
-  margin: 5px;
-  padding: 5px;
-  border: 1px solid black;
+#comments_list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+#comments_list ul {
+  /*  this is so that the nested comments also don't have the list indicator things */
+  list-style: none;
+  padding: 0;
+  margin: 0;
 }
 
 .comment_submission_area {

@@ -49,3 +49,4 @@ if (!mysqli_query($conn, $query)) {
 
 // return updated views count
 echo $views + 1;
+header("HTTP/1.1 200 OK");

@@ -18,3 +18,5 @@ $query = "UPDATE website_db.comments SET likes = likes + 1 WHERE id = $comment_i
 if (!mysqli_query($conn, $query)) {
   return "MySQL Error: " . mysqli_error($conn);
 }
+
+header("HTTP/1.1 200 OK");
