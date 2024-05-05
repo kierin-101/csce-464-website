@@ -2,6 +2,7 @@
 // validate user input
 $user = $_POST['name'];
 $comment = $_POST['comment'];
+$session_id = $_POST['session_id'];
 
 // check if comment is a reply
 if (isset($_POST['parent_id'])) {
@@ -31,9 +32,9 @@ date_default_timezone_set('America/Chicago');
 $time = date("Y-m-d H:i:s");
 
 if (isset($parent_id)) {
-  $query = "INSERT INTO website_db.comments (user, comment, comment_time, likes, parent_id) VALUES ('$user', '$comment', '$time', 0, $parent_id)";
+  $query = "INSERT INTO website_db.comments (user, comment, comment_time, likes, session_id, parent_id) VALUES ('$user', '$comment', '$time', 0, '$session_id', '$parent_id')";
 } else {
-  $query = "INSERT INTO website_db.comments (user, comment, comment_time, likes) VALUES ('$user', '$comment', '$time', 0)";
+  $query = "INSERT INTO website_db.comments (user, comment, comment_time, likes, session_id) VALUES ('$user', '$comment', '$time', 0, '$session_id')";
 }
 
 if (!mysqli_query($conn, $query)) {

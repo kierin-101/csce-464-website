@@ -1,4 +1,7 @@
 var userIsTyping = false;
+var sessionId = Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
+sessionStorage.setItem('sessionId', sessionId);
+console.log("sessionId", sessionId);
 
 function getComments() {
   if (userIsTyping) { // Don't refresh comments if user is typing
@@ -41,23 +44,51 @@ function getComments() {
         // give list item an id
         li.id = `comment_${comment.id}`;
         // add comment content to list item
-        li.innerHTML = `
-          <h3>${comment.user}</h3>
-          <p>${comment.comment}</p>
-          <p><i>${comment.comment_time}</i></p>
-          <p>${comment.likes} likes</p>
-          <div>
-            <button onclick="likeComment(${comment.id})" style="padding: 10px; font-size: inherit;">
-              Like
-            </button>
-            <button onclick="replyComment(${comment.id})" style="padding: 10px; font-size: inherit;">
-              Reply
-            </button>
-          </div>
-          <div id="replyForm_${comment.id}"></div>
-          <hr>
-          <ul id="replies_${comment.id}"></ul>
-        `;
+        // create nodes for comment content
+        const name = document.createElement("strong");
+        name.textContent = comment.user;
+        const date = document.createElement("em");
+        date.textContent = comment.comment_time;
+
+        const likeButton = document.createElement("button");
+        likeButton.textContent = "Like";
+        likeButton.onclick = () => likeComment(comment.id);
+        if (comment.likes > 0) {
+          likeButton.textContent += ` (${comment.likes})`;
+        }
+        const replyButton = document.createElement("button");
+        replyButton.textContent = "Reply";
+        replyButton.onclick = () => replyToComment(comment.id);
+        const commentText = document.createElement("p");
+        commentText.textContent = comment.comment;
+        // append nodes to list item
+        li.appendChild(name);
+        li.appendChild(document.createElement("br"));
+        li.appendChild(date);
+        li.appendChild(document.createElement("br"));
+        li.appendChild(commentText);
+        // div to hold like, edit, and reply buttons
+        const buttonDiv = document.createElement("div");
+        if (sessionId == comment.session_id) {
+          const editButton = document.createElement("button");
+          editButton.textContent = "Edit";
+          editButton.onclick = () => editComment(comment.id);
+          buttonDiv.appendChild(editButton);
+        }
+        buttonDiv.style.margin = "10px 10px";
+        buttonDiv.appendChild(likeButton);
+        buttonDiv.appendChild(replyButton);
+        li.appendChild(buttonDiv);
+        // add horizontal rule after comment
+        li.appendChild(document.createElement("hr"));
+        // create reply form for each comment
+        const replyForm = document.createElement("div");
+        replyForm.id = `replyForm_${comment.id}`;
+        li.appendChild(replyForm);
+        // create reply list for each comment
+        const replyList = document.createElement("ul");
+        replyList.id = `replies_${comment.id}`;
+        li.appendChild(replyList);
         // if comment is a reply, indent it
         if (comment.parent_id != null) {
           replyComment = true;
@@ -75,8 +106,10 @@ function getComments() {
   }
   req.send();
 }
+getComments() // get comments on page load
+setInterval(getComments, 5000); // refresh comments every 5 seconds
 
-function replyComment(id) {
+function replyToComment(id) {
   userIsTyping = true; // User is typing so don't refresh comments
   const req = new XMLHttpRequest();
   req.open("GET", `getCommentById.php?id=${id}`, true);
@@ -95,7 +128,8 @@ function replyComment(id) {
           <input type="text" id="reply_name" placeholder="Your Name" style="font-size: inherit; margin: 10px 0;">
           <input type="text" id="reply_comment" placeholder="Your Comment" style="font-size: inherit; margin: 10px 0;">
           <input type="submit" value="Submit" style="padding: 10px; font-size: inherit;">
-        </form>`;
+        </form>
+        <hr>`;
       replyForm.scrollIntoView({ behavior: "smooth", block: "center" });
     }
   }
@@ -123,7 +157,7 @@ function submitReply(event, parentId) { // called by form so prevent default
       commentElement.scrollIntoView();
     }
   }
-  req.send(`name=${name}&comment=${comment}&parent_id=${parentId}`);
+  req.send(`name=${name}&comment=${comment}&parent_id=${parentId}&session_id=${sessionId}`);
 }
 
 function getCommentById(id) {
@@ -158,16 +192,9 @@ function submitComment(event) {
     if (req.readyState == 4 && req.status == 200) {
       userIsTyping = false;
       getComments(); // Refresh comments immediately
-      await new Promise(r => setTimeout(r, 1000)); // wait 1 second for comment to be added
-      // get comment id from response
-      const commentId = req.responseText;
-      // get comment element
-      const commentElement = document.getElementById(`comment_${commentId}`);
-      // scroll to comment
-      commentElement.scrollIntoView();
     }
   }
-  req.send(`name=${name}&comment=${comment}`);
+  req.send(`name=${name}&comment=${comment}&session_id=${sessionId}`);
 }
 
 
@@ -183,5 +210,42 @@ function likeComment(id) {
   req.send(`id=${id}`);
 }
 
-getComments() // get comments on page load
-setInterval(getComments, 5000); // refresh comments every 5 seconds
+function editComment(id) {
+  userIsTyping = true; // User is typing so don't refresh comments
+  const req = new XMLHttpRequest();
+  req.open("GET", `getCommentById.php?id=${id}`, true);
+  req.onreadystatechange = function () {
+    if (req.readyState == 4 && req.status == 200) {
+      const comment = JSON.parse(req.responseText);
+      console.log(comment);
+      // close other reply forms
+      const replyForms = document.querySelectorAll('[id^="replyForm_"]');
+      replyForms.forEach(form => form.innerHTML = "");
+      // open reply form for this comment
+      const replyForm = document.getElementById(`replyForm_${id}`);
+      replyForm.innerHTML = `
+        <h3>Edit Comment</h3>
+        <form onsubmit="submitEdit(event, ${comment.id})">
+          <input type="text" id="edited_comment" value="${comment.comment}" style="font-size: inherit; margin: 10px 0;">
+          <input type="submit" value="Submit" style="padding: 10px; font-size: inherit;">
+        </form>`;
+      replyForm.scrollIntoView({ behavior: "smooth", block: "center" });
+    }
+  }
+  req.send();
+}
+
+function submitEdit(event, id) {
+  event.preventDefault();
+  const comment = document.getElementById("edited_comment").value;
+  const req = new XMLHttpRequest();
+  req.open("POST", "editComment.php", true);
+  req.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+  req.onreadystatechange = function () {
+    if (req.readyState == 4 && req.status == 200) {
+      userIsTyping = false;
+      getComments(); // Refresh comments immediately
+    }
+  }
+  req.send(`id=${id}&comment=${comment}`);
+}
