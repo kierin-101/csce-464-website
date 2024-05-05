@@ -8,12 +8,12 @@ if (isset($_POST['parent_id'])) {
   $parent_id = $_POST['parent_id'];
 }
 
-if (strlen($user) <= 3) {
-  return 'Name must be longer than 3 characters';
+if (strlen($user) < 1) {
+  return 'Name must be at least 1 character';
 }
 
-if (strlen($comment) <= 5) {
-  return 'Comment must be longer than 5 characters';
+if (strlen($comment) < 1) {
+  return 'Comment must be at least 1 character';
 }
 
 // sanitize user input
@@ -45,6 +45,3 @@ echo mysqli_insert_id($conn);
 
 // close mysql connection
 mysqli_close($conn);
-
-// return success
-header("HTTP/1.1 200 OK");

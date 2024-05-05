@@ -6,6 +6,7 @@ $conn = mysqli_connect("localhost", "root");
 $query = "SELECT * FROM website_db.comments";
 $result = mysqli_query($conn, $query);
 if (mysqli_num_rows($result) > 0) {
+  header("HTTP/1.1 200 OK"); // comments found so return 200 status code
   $i = 0;
   echo "{"; // start of json array
   while ($row = mysqli_fetch_assoc($result)) {
@@ -30,7 +31,6 @@ if (mysqli_num_rows($result) > 0) {
   }
   echo "}"; // end of json array
   mysqli_close($conn);
-  header("HTTP/1.1 200 OK");
 } else {
   header("HTTP/1.1 404 Not Found"); // no comments found
 }

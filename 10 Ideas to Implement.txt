@@ -4,7 +4,7 @@ Check mark for copy pasting - ✓
 ---------------------
 1.  Store comments in database to persist through closes/reloads ✓
 2.  Live comment updating across pages ✓
-3.  Ability to reply to comments
+3.  Ability to reply to comments ✓
 4.  Way to edit comments you posted
 5.  Ability to "like" comments  ✓
 6.  Allow user to make text on the site bigger/smaller ✓

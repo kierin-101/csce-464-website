@@ -47,9 +47,14 @@ function getComments() {
           <p><i>${comment.comment_time}</i></p>
           <p>${comment.likes} likes</p>
           <div>
-            <button onclick="likeComment(${comment.id})">Like</button>
-            <button onclick="replyComment(${comment.id})">Reply</button>
+            <button onclick="likeComment(${comment.id})" style="padding: 10px; font-size: inherit;">
+              Like
+            </button>
+            <button onclick="replyComment(${comment.id})" style="padding: 10px; font-size: inherit;">
+              Reply
+            </button>
           </div>
+          <div id="replyForm_${comment.id}"></div>
           <hr>
           <ul id="replies_${comment.id}"></ul>
         `;
@@ -79,16 +84,19 @@ function replyComment(id) {
     if (req.readyState == 4 && req.status == 200) {
       const comment = JSON.parse(req.responseText);
       console.log(comment);
-      document.getElementById(`comment_${id}`).innerHTML += `<div id="replyForm_${id}"></div>`;
+      // close other reply forms
+      const replyForms = document.querySelectorAll('[id^="replyForm_"]');
+      replyForms.forEach(form => form.innerHTML = "");
+      // open reply form for this comment
       const replyForm = document.getElementById(`replyForm_${id}`);
       replyForm.innerHTML = `
         <h3>Reply to ${comment.user}</h3>
         <form onsubmit="submitReply(event, ${comment.id})">
-          <input type="text" id="reply_name" placeholder="Your Name">
-          <input type="text" id="reply_comment" placeholder="Your Comment">
-          <input type="submit" value="Submit">
-        </form>
-      `;
+          <input type="text" id="reply_name" placeholder="Your Name" style="font-size: inherit; margin: 10px 0;">
+          <input type="text" id="reply_comment" placeholder="Your Comment" style="font-size: inherit; margin: 10px 0;">
+          <input type="submit" value="Submit" style="padding: 10px; font-size: inherit;">
+        </form>`;
+      replyForm.scrollIntoView({ behavior: "smooth", block: "center" });
     }
   }
   req.send();
@@ -102,10 +110,17 @@ function submitReply(event, parentId) { // called by form so prevent default
   console.log("submitReply", parentId);
   req.open("POST", "uploadComment.php", true);
   req.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-  req.onreadystatechange = function () {
+  req.onreadystatechange = async function () {
     if (req.readyState == 4) {
       userIsTyping = false;
       getComments(); // Refresh comments immediately
+      await new Promise(r => setTimeout(r, 1000)); // wait 1 second for comment to be added
+      // get comment id from response
+      const commentId = req.responseText;
+      // get comment element
+      const commentElement = document.getElementById(`comment_${commentId}`);
+      // scroll to comment
+      commentElement.scrollIntoView();
     }
   }
   req.send(`name=${name}&comment=${comment}&parent_id=${parentId}`);
