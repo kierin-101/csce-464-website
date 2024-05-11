@@ -28,12 +28,20 @@
       </li>
       <li><a href="resume.html">Resume</a></li>
       <li><a href="trivia_game.html">Trivia Game</a></li>
+      <li>
+        <button id="theme_button" onclick="switchTheme()">Switch to Dark Mode</button>
+      </li>
+      <li>
+        <button id="theme_button" onclick="changeFontSize(2)">Increase Font Size</button>
+      </li>
+      <li>
+        <button id="theme_button" onclick="changeFontSize(-2)">Decrease Font Size</button>
+      </li>
+      <li>
+        <button id="theme_button">This page has been viewed <span id="view_count">?</span> times.</button>
+      </li>
     </nav>
   </header>
-  <button id="theme_button" onclick="switchTheme()">
-    Switch to Dark Mode
-  </button>
-  <h2>This page has been viewed <span id="view_count">?</span> times.</h2>
   <script>
     updateViewCount(2);
   </script>

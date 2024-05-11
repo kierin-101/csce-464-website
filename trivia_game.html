@@ -29,18 +29,30 @@
       </li>
       <li><a href="resume.html">Resume</a></li>
       <li><a href="trivia_game.html">Trivia Game</a></li>
+      <li>
+        <button id="theme_button" onclick="switchTheme()">Switch to Dark Mode</button>
+      </li>
+      <li>
+        <button id="theme_button" onclick="changeFontSize(2)">Increase Font Size</button>
+      </li>
+      <li>
+        <button id="theme_button" onclick="changeFontSize(-2)">Decrease Font Size</button>
+      </li>
+      <li>
+        <button id="theme_button">This page has been viewed <span id="view_count">?</span> times.</button>
+      </li>
     </nav>
   </header>
-  <button id="theme_button" onclick="switchTheme()">
-    Switch to Dark Mode
-  </button>
-  <h2>This page has been viewed <span id="view_count">?</span> times.</h2>
   <script>
     updateViewCount(3);
   </script>
   <h1>Trivia Game</h1>
   <div id="startScreen">
-    <p>Test your knowledge with this trivia game! Click the button below to start.</p>
+    <p>Test your knowledge about me with this trivia game! Click the button below to start.</p>
+    <p>
+      Each question can be worth up to 30 points. The faster you answer, the more points you get. If you answer
+      incorrectly, the game will end. Good luck!
+    </p>
     <button onclick="startGame()">Start Game</button>
   </div>
   <div id="gameScreen" style="display: none;">
@@ -48,11 +60,23 @@
     <p id="question">Loading...</p>
     <p id="answers"></p>
     <p>Score: <span id="score">0</span></p>
+    <p>Points this question: <span id="questionScore">30</span></p>
   </div>
   <div id="endScreen" style="display: none;">
     <p>Game Over!</p>
     <p id="finalScoreMessage"></p>
+    <form onsubmit="submitScore(event)" id="triviaGameForm" method="post">
+      <label for="name">Enter your name:</label>
+      <input type="text" id="triviaGameName" name="name">
+      <label for="abbreviation">Enter your initials:</label>
+      <input type="text" id="triviaGameAbbreviation" name="abbreviation" maxlength="3">
+      <button type="submit">Submit Score</button>
+    </form>
+    <br>
     <button onclick="startGame()">Play Again</button>
+    <br>
+    <div id="topScores"></div>
+  </div>
 </body>
 
 </html>

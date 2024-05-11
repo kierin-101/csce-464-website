@@ -27,18 +27,17 @@ function getComments() {
       const comments = JSON.parse(req.responseText);
 
       // get comments list element
-      const list = document.getElementById("comments_list");
+      const root_comment_list = document.getElementById("comments_list");
 
       // get font size from session storage
       const fontSize = sessionStorage.getItem('fontSize');
-      list.style.fontSize = (isNaN(parseInt(fontSize)) ? 16 : fontSize) + 'px';
+      root_comment_list.style.fontSize = (isNaN(parseInt(fontSize)) ? 16 : fontSize) + 'px';
 
       // clear list before adding comments
-      list.innerHTML = "";
+      root_comment_list.innerHTML = "";
 
       // add comments to list through forEach loop
       Object.values(comments).forEach(comment => {
-        let replyComment = false;
         // create list item for each comment
         const li = document.createElement("li");
         // give list item an id
@@ -46,10 +45,22 @@ function getComments() {
         // add comment content to list item
         // create nodes for comment content
         const name = document.createElement("strong");
-        name.textContent = comment.user;
+        name.innerHTML = comment.user;
         const date = document.createElement("em");
         date.textContent = comment.comment_time;
 
+        const commentText = document.createElement("p");
+        // have to use innerHTML to render special characters like ' and " and stuff
+        commentText.innerHTML = comment.comment;
+        // append nodes to list item
+        li.appendChild(name);
+        li.appendChild(document.createElement("br"));
+        li.appendChild(date);
+        li.appendChild(document.createElement("br"));
+        li.appendChild(commentText);
+        // div to hold like, edit, and reply buttons
+        const buttonDiv = document.createElement("div");
+        buttonDiv.style.margin = "10px 10px";
         const likeButton = document.createElement("button");
         likeButton.textContent = "Like";
         likeButton.onclick = () => likeComment(comment.id);
@@ -59,25 +70,15 @@ function getComments() {
         const replyButton = document.createElement("button");
         replyButton.textContent = "Reply";
         replyButton.onclick = () => replyToComment(comment.id);
-        const commentText = document.createElement("p");
-        commentText.textContent = comment.comment;
-        // append nodes to list item
-        li.appendChild(name);
-        li.appendChild(document.createElement("br"));
-        li.appendChild(date);
-        li.appendChild(document.createElement("br"));
-        li.appendChild(commentText);
-        // div to hold like, edit, and reply buttons
-        const buttonDiv = document.createElement("div");
+        buttonDiv.appendChild(likeButton);
+        buttonDiv.appendChild(replyButton);
+        // only show edit button if current session id matches comment session id
         if (sessionId == comment.session_id) {
           const editButton = document.createElement("button");
           editButton.textContent = "Edit";
           editButton.onclick = () => editComment(comment.id);
           buttonDiv.appendChild(editButton);
         }
-        buttonDiv.style.margin = "10px 10px";
-        buttonDiv.appendChild(likeButton);
-        buttonDiv.appendChild(replyButton);
         li.appendChild(buttonDiv);
         // add horizontal rule after comment
         li.appendChild(document.createElement("hr"));
@@ -91,16 +92,14 @@ function getComments() {
         li.appendChild(replyList);
         // if comment is a reply, indent it
         if (comment.parent_id != null) {
-          replyComment = true;
           li.style.marginLeft = "40px";
           // get parent comment reply list
           const parentReplies = document.getElementById(`replies_${comment.parent_id}`);
           // add reply to parent comment's reply list
           parentReplies.appendChild(li);
+          return;
         }
-        if (!replyComment) {
-          list.appendChild(li);
-        }
+        root_comment_list.appendChild(li);
       });
     }
   }

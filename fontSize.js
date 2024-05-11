@@ -3,15 +3,12 @@ function changeFontSize(delta) {
   if (isNaN(parseInt(size))) {
     size = 16;
   }
-  console.log(size);
   const parsedSize = parseInt(size);
   const newSize = parsedSize + delta;
-  if (newSize < 8 || newSize > 24) {
+  if (newSize < 10 || newSize > 22) {
     return;
   }
-  console.log(delta, newSize);
   sessionStorage.setItem('fontSize', newSize);
-  console.log(sessionStorage);
   // go through paragraphs and change font size
   var p = document.getElementsByTagName('p');
   for (var i = 0; i < p.length; i++) {
