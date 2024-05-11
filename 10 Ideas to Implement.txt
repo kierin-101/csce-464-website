@@ -11,4 +11,4 @@ Check mark for copy pasting - ✓
 7.  Add my resume w/ ability to download ✓
 8.  Add page view counter ✓
 9.  Add "About me" trivia game ✓
-10. Store trivia game scores in database and display top 10 scores
+10. Store trivia game scores in database and display top 10 scores ✓
